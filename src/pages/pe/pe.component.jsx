@@ -5,11 +5,7 @@ import ApplicationBar from '../../components/app-bar/application-bar.component.j
 
 function PEPage() {
   // const classes = useStyles();
-  return (
-    <div>
-      <ApplicationBar />
-    </div>
-  );
+  return <div>PE PAGE</div>;
 }
 
 export default PEPage;

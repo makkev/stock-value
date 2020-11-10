@@ -23,7 +23,7 @@ const ApplicationBar = ({ menu, setMenu, history }) => {
     setMenu(newValue);
     switch (newValue) {
       case 0:
-        history.push('/PE');
+        history.push('PE');
         break;
       case 1:
         history.push('DCF');
