@@ -1,11 +1,10 @@
 import React from 'react';
-
-import ApplicationBar from '../../components/app-bar/application-bar.component';
+import PEPage from '../pe/pe.component';
 
 const HomePage = () => {
   return (
     <div>
-      <ApplicationBar />
+      <PEPage />
     </div>
   );
 };
