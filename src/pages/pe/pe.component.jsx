@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import {
   Button,
   Container,
@@ -5,12 +7,37 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import React from 'react';
+
+import { setInputs } from '../../redux/pe/pe.actions';
 
 import { useStyles } from './pe.styles.js';
 
-function PEPage() {
+function PEPage({ inputs, setIputs }) {
   const classes = useStyles();
+
+  const [currentInputs, setCurrentInputs] = useState({
+    eps: 11.89,
+    medianHistoricalPE: 15.4,
+    expectedGrowthRate: 0.986,
+    marginOfSafety: 0.25,
+    conservativeGrowthRate: 0.74,
+    discountRate: 0.09,
+  });
+
+  const handleChange = event => {
+    const { value, name } = event.target;
+    setCurrentInputs(prevInputs => ({
+      ...prevInputs,
+      [name]: value === '' ? '' : Number(value),
+    }));
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    setInputs(currentInputs);
+  };
+
   return (
     <div>
       <Container>
@@ -18,17 +45,16 @@ function PEPage() {
           PE Valuation
         </Typography>
         <Paper className={classes.paper}>
-          <form>
+          <form autoComplete="off" onSubmit={handleSubmit}>
             <div className={classes.container}>
               {/* EPS */}
               <div>
                 <TextField
                   id="standard-number"
                   label="EPS"
-                  // value={inputs.eps}
-                  value={1}
+                  value={currentInputs.eps}
                   name="eps"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   type="number"
                   // className={classes.textField}
                   InputLabelProps={{
@@ -43,10 +69,9 @@ function PEPage() {
                 <TextField
                   id="standard-number"
                   label="Median historical P/E"
-                  // value={inputs.medianHistPE}
-                  value={1}
-                  name="medianHistPE"
-                  // onChange={handleChange}
+                  value={currentInputs.medianHistoricalPE}
+                  name="medianHistoricalPE"
+                  onChange={handleChange}
                   type="number"
                   // className={classes.textField}
                   InputLabelProps={{
@@ -61,10 +86,9 @@ function PEPage() {
                 <TextField
                   id="standard-number"
                   label="Expected growth rate"
-                  // value={inputs.expectGrowthRate}
-                  value={1}
-                  name="expectGrowthRate"
-                  // onChange={handleChange}
+                  value={currentInputs.expectedGrowthRate}
+                  name="expectedGrowthRate"
+                  onChange={handleChange}
                   type="number"
                   className={classes.textField}
                   InputLabelProps={{
@@ -79,10 +103,9 @@ function PEPage() {
                 <TextField
                   id="standard-number"
                   label="Margin of Safety"
-                  // value={inputs.marginSafety}
-                  value={1}
-                  name="marginSafety"
-                  // onChange={handleChange}
+                  value={currentInputs.marginOfSafety}
+                  name="marginOfSafety"
+                  onChange={handleChange}
                   type="number"
                   className={classes.textField}
                   InputLabelProps={{
@@ -98,10 +121,9 @@ function PEPage() {
                   disabled
                   id="standard-number"
                   label="Conservative growth rate"
-                  // value={inputs.conservGrowthRt.toFixed(2)}
-                  value={1}
-                  name="conservGrowthRt"
-                  // onChange={handleChange}
+                  value={currentInputs.conservativeGrowthRate.toFixed(2)}
+                  name="conservativeGrowthRate"
+                  onChange={handleChange}
                   type="number"
                   className={classes.textField}
                   InputLabelProps={{
@@ -112,33 +134,14 @@ function PEPage() {
                 />
               </div>
 
-              {/* Growth decline rate */}
-              <div>
-                <TextField
-                  id="standard-number"
-                  label="Growth decline rate"
-                  // value={inputs.growthDeclineRt}
-                  value={1}
-                  name="growthDeclineRt"
-                  // onChange={handleChange}
-                  type="number"
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  margin="normal"
-                />
-              </div>
-
               {/* Discount Rate */}
               <div>
                 <TextField
                   id="standard-number"
                   label="Discount rate"
-                  // value={inputs.discountRt}
-                  value={1}
-                  name="discountRt"
-                  // onChange={handleChange}
+                  value={currentInputs.discountRate}
+                  name="discountRate"
+                  onChange={handleChange}
                   type="number"
                   className={classes.textField}
                   InputLabelProps={{
@@ -152,6 +155,7 @@ function PEPage() {
               variant="contained"
               color="primary"
               className={classes.button}
+              type="submit"
             >
               Submit
             </Button>
@@ -162,4 +166,12 @@ function PEPage() {
   );
 }
 
-export default PEPage;
+const mapStateToProps = state => ({
+  inputs: state.pe.inputs,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setInputs: inputs => dispatch(setInputs(inputs)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PEPage);
