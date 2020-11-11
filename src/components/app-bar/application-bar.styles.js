@@ -9,5 +9,10 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    color: '#4433ff',
+  },
+  appbar: {
+    marginBottom: '3em',
+    boxShadow: '0px 0px 0px 0px',
   },
 }));

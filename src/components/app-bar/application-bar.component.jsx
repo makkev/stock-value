@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -8,6 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import { useStyles } from './application-bar.styles.js';
+import { getPageUrl } from './application-bar.utils.js';
 
 function a11yProps(index) {
   return {
@@ -19,27 +20,18 @@ function a11yProps(index) {
 const ApplicationBar = ({ menu, setMenu, history }) => {
   const classes = useStyles();
 
+  useEffect(() => {
+    history.push(getPageUrl(menu));
+  }, []);
+
   const handleChange = (event, newValue) => {
     setMenu(newValue);
-    switch (newValue) {
-      case 0:
-        history.push('PE');
-        break;
-      case 1:
-        history.push('DCF');
-        break;
-      case 2:
-        history.push('ROE');
-        break;
-      default:
-        history.push('/');
-        break;
-    }
+    history.push(getPageUrl(newValue));
   };
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Stock Valuation
