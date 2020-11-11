@@ -10,7 +10,14 @@ export const theme = createMuiTheme({
     },
     secondary: {
       // main: green[500],
-      main: '#c0392b',
+      // main: '#c0392b',
+      main: '#eb4d4b',
     },
+  },
+});
+
+export const textFieldTheme = createMuiTheme({
+  palette: {
+    primary: { main: '#4432ff' },
   },
 });
