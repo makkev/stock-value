@@ -16,10 +16,18 @@ function App() {
     <div className="App">
       <ApplicationBar menu={menu} setMenu={setMenu} />
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/PE" component={PEPage} />
-        <Route path="/DCF" component={DCFPage} />
-        <Route path="/ROE" component={ROEPage} />
+        <Route exact path="/">
+          <HomePage setMenu={setMenu} />
+        </Route>
+        <Route path="/PE">
+          <PEPage setMenu={setMenu} />
+        </Route>
+        <Route path="/DCF">
+          <DCFPage setMenu={setMenu} />
+        </Route>
+        <Route path="/ROE">
+          <ROEPage setMenu={setMenu} />
+        </Route>
       </Switch>
     </div>
   );

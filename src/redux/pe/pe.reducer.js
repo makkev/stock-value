@@ -19,7 +19,6 @@ const peReducer = (state = INITIAL_STATE, action) => {
           medianHistoricalPE: action.payload.medianHistoricalPE,
           expectedGrowthRate: action.payload.expectedGrowthRate,
           marginOfSafety: action.payload.marginOfSafety,
-          conservativeGrowthRate: action.payload.conservativeGrowthRate,
           discountRate: action.payload.discountRate,
         },
       };

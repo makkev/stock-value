@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
     color: '#4433ff',
   },
   appbar: {
-    marginBottom: '3em',
+    marginBottom: '2em',
     boxShadow: '0px 0px 0px 0px',
   },
 }));

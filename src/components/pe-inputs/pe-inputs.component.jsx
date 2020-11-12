@@ -10,10 +10,9 @@ function PEInputs({ inputs, setInputs }) {
   const [currentInputs, setCurrentInputs] = useState({
     eps: 11.89,
     medianHistoricalPE: 15.4,
-    expectedGrowthRate: 0.986,
-    marginOfSafety: 0.25,
-    conservativeGrowthRate: 0.74,
-    discountRate: 0.09,
+    expectedGrowthRate: 9.86,
+    marginOfSafety: 25,
+    discountRate: 9,
   });
 
   const handleChange = event => {
@@ -44,7 +43,7 @@ function PEInputs({ inputs, setInputs }) {
                   name="eps"
                   onChange={handleChange}
                   type="number"
-                  // className={classes.textField}
+                  className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -61,7 +60,6 @@ function PEInputs({ inputs, setInputs }) {
                   name="medianHistoricalPE"
                   onChange={handleChange}
                   type="number"
-                  // className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -78,7 +76,6 @@ function PEInputs({ inputs, setInputs }) {
                   name="expectedGrowthRate"
                   onChange={handleChange}
                   type="number"
-                  className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -95,30 +92,10 @@ function PEInputs({ inputs, setInputs }) {
                   name="marginOfSafety"
                   onChange={handleChange}
                   type="number"
-                  className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}
                   margin="normal"
-                />
-              </div>
-
-              {/* Conservative growth rate */}
-              <div>
-                <TextField
-                  disabled
-                  id="standard-number"
-                  label="Conservative growth rate"
-                  value={currentInputs.conservativeGrowthRate.toFixed(2)}
-                  name="conservativeGrowthRate"
-                  onChange={handleChange}
-                  type="number"
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  margin="normal"
-                  variant="filled"
                 />
               </div>
 
@@ -131,7 +108,6 @@ function PEInputs({ inputs, setInputs }) {
                   name="discountRate"
                   onChange={handleChange}
                   type="number"
-                  className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}

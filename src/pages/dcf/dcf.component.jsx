@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-function DCFPage() {
+function DCFPage({ setMenu }) {
+  useEffect(() => {
+    setMenu(1);
+  }, []);
+
   return <div>DCF Page</div>;
 }
 

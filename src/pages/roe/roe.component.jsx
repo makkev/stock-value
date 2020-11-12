@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-function ROEPage() {
+function ROEPage({ setMenu }) {
+  useEffect(() => {
+    setMenu(2);
+  }, []);
+
   return <div>ROE PAGE</div>;
 }
 
