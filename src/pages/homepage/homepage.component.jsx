@@ -1,10 +1,10 @@
 import React from 'react';
-import PEPage from '../pe/pe.component';
+import Watchlist from '../watchlist/watchlist.component';
 
-const HomePage = () => {
+const HomePage = ({ setMenu }) => {
   return (
     <div>
-      <PEPage />
+      <Watchlist setMenu={setMenu} />
     </div>
   );
 };

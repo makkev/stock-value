@@ -41,9 +41,10 @@ const ApplicationBar = ({ menu, setMenu, history }) => {
             onChange={handleChange}
             aria-label="simple tabs example"
           >
-            <Tab label="PE Valuation" {...a11yProps(0)} />
-            <Tab label="DCF Valuation" {...a11yProps(1)} />
-            <Tab label="ROE Valuation" {...a11yProps(2)} />
+            <Tab label="Watchlist" {...a11yProps(0)} />
+            <Tab label="PE Valuation" {...a11yProps(1)} />
+            <Tab label="DCF Valuation" {...a11yProps(2)} />
+            <Tab label="ROE Valuation" {...a11yProps(3)} />
           </Tabs>
 
           {/* <Button color="inherit">Login</Button> */}

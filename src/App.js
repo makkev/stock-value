@@ -8,6 +8,7 @@ import DCFPage from './pages/dcf/dcf.component';
 import HomePage from './pages/homepage/homepage.component';
 import PEPage from './pages/pe/pe.component';
 import ROEPage from './pages/roe/roe.component';
+import Watchlist from './pages/watchlist/watchlist.component';
 
 function App() {
   const [menu, setMenu] = useState(0);
@@ -18,6 +19,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <HomePage setMenu={setMenu} />
+        </Route>
+        <Route path="/watchlist">
+          <Watchlist setMenu={setMenu} />
         </Route>
         <Route path="/PE">
           <PEPage setMenu={setMenu} />

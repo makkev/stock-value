@@ -120,6 +120,7 @@ function PEInputs({ inputs, setInputs }) {
             variant="contained"
             color="primary"
             className={classes.button}
+            disableElevation
             type="submit"
           >
             Submit

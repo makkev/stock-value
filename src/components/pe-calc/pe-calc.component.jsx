@@ -29,15 +29,12 @@ const PECalc = ({ inputs }) => {
   } = inputs;
 
   const classes = useStyles();
-  console.log('inputs: ', inputs);
 
   const [annualVal, setAnnualVal] = useState([]);
   const [conservativeGrowthRate, setConservativeGrowthRate] = useState(0);
   const [finalVal, setFinalVal] = useState(0);
   const [presentVal, setPresentVal] = useState(null);
   const [zoomIn, setZoomIn] = useState(true);
-
-  console.log('annualVal: ', annualVal);
 
   useEffect(() => {
     let rate = (expectedGrowthRate * (1 - marginOfSafety / 100)).toFixed(2);

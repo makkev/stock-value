@@ -13,7 +13,7 @@ function PEPage({ inputs, setInputs, setMenu }) {
   const classes = useStyles();
 
   useEffect(() => {
-    setMenu(0);
+    setMenu(1);
   }, []);
 
   return (

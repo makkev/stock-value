@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 function ROEPage({ setMenu }) {
   useEffect(() => {
-    setMenu(2);
+    setMenu(3);
   }, []);
 
   return <div>ROE PAGE</div>;

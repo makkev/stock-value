@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 function DCFPage({ setMenu }) {
   useEffect(() => {
-    setMenu(1);
+    setMenu(2);
   }, []);
 
   return <div>DCF Page</div>;

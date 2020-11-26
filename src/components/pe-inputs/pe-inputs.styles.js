@@ -15,7 +15,8 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: '1em',
   },
   button: {
-    boxShadow: '0px 0px 0px 0px',
-    // marginBottom: '1.2em',
+    '&:hover': {
+      // backgroundColor: '#9bcff2',
+    },
   },
 }));
