@@ -1,23 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Typography } from '@material-ui/core';
 
 import { setInputs } from '../../redux/pe/pe.actions';
 
-import { useStyles } from './pe.styles.js';
-
 import PEInputs from '../../components/pe-inputs/pe-inputs.component';
 import PECalc from '../../components/pe-calc/pe-calc.component';
+import ApplicationBar from '../../components/app-bar/application-bar.component';
 
-function PEPage({ inputs, setInputs, setMenu }) {
+import { useStyles } from './pe.styles.js';
+
+function PEPage({ inputs, setInputs, location }) {
   const classes = useStyles();
-
-  useEffect(() => {
-    setMenu(1);
-  }, []);
 
   return (
     <div>
+      <ApplicationBar route={location.pathname} />
       <Container>
         <Typography variant="h5" className={classes.title}>
           PE Valuation

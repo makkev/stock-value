@@ -1,13 +1,15 @@
 export function getPageUrl(idx) {
   switch (idx) {
     case 0:
-      return 'watchlist';
+      return '/PE';
     case 1:
-      return 'PE';
-    case 2:
-      return 'DCF';
-    case 3:
-      return 'ROE';
+      return '/watchlist';
+    // case 2:
+    //   return '/DCF';
+    // case 3:
+    //   return '/ROE';
+    // case 4:
+    //   return '/signin';
     default:
       return '/';
   }
