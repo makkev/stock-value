@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { Container, TextField, Typography } from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { SECURITY_LIST } from '../../redux/security-list/security-list.data';
@@ -21,15 +28,40 @@ const Watchlist = ({ location, history, currentUser }) => {
   const classes = useStyles();
 
   const [screen, setScreen] = useState(SCREEN.INDEX);
+  const [watchList, setWatchList] = useState({});
+
+  console.log('currentUser: ', currentUser);
+  console.log('watchList: ', watchList);
 
   useEffect(() => {
-    // setMenu(1);
-
     fetch('http://localhost:3000/securityList')
       .then(response => response.json())
-      // .then(data => console.log(data));
       .then(console.log);
   }, []);
+
+  useEffect(() => {
+    const fetchWatchList = async () => {
+      const response = await fetch('http://localhost:3000/watchlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: currentUser,
+        }),
+      });
+      const data = await response.json();
+
+      let rec = null;
+      let watchlist = {};
+      for (const securityCode of data) {
+        rec = await fetch(
+          `http://localhost:3000/securityDetails/${securityCode}`
+        );
+        watchlist[securityCode] = await rec.json();
+      }
+      return watchlist;
+    };
+    fetchWatchList().then(response => setWatchList(response));
+  }, [currentUser]);
 
   const handleChange = (event, newValue) => {
     // console.log(newValue);
@@ -38,8 +70,10 @@ const Watchlist = ({ location, history, currentUser }) => {
 
     setScreen(SCREEN.DETAILS);
   };
-
-  console.log('history: ', history);
+  console.log(
+    'watchlist: ',
+    Object.keys(watchList).map((key, index) => watchList[key].price.value)
+  );
 
   return (
     <div>
@@ -65,6 +99,34 @@ const Watchlist = ({ location, history, currentUser }) => {
               )}
               onChange={handleChange}
             />
+            {watchList && (
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Security Code</TableCell>
+                      <TableCell align="right">Price</TableCell>
+                      <TableCell align="right">Value</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {Object.keys(watchList).map((key, index) => (
+                      <TableRow key={index}>
+                        <TableCell component="th" scope="row">
+                          {key}
+                        </TableCell>
+                        <TableCell align="right">
+                          {watchList[key].price.value}
+                        </TableCell>
+                        <TableCell align="right">
+                          {watchList[key].peCalc.presentValue.toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
           </Container>
         </div>
       )}

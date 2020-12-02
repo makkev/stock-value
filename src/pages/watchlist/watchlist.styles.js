@@ -4,4 +4,7 @@ export const useStyles = makeStyles(theme => ({
   title: {
     marginBottom: '1em',
   },
+  table: {
+    minWidth: 650,
+  },
 }));
