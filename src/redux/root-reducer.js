@@ -1,9 +1,19 @@
 import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import peReducer from './pe/pe.reducer';
 import UserReducer from './user/user.reducer';
 
-export default combineReducers({
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['user'],
+};
+
+const rootReducer = combineReducers({
   pe: peReducer,
   user: UserReducer,
 });
+
+export default persistReducer(persistConfig, rootReducer);

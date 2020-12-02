@@ -1,4 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,14 +15,12 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { useStyles } from './signin.styles';
-import { theme, textFieldTheme } from '../../theme/theme.js';
 import { ThemeProvider } from '@material-ui/core';
-import { connect } from 'react-redux';
+
+import { theme, textFieldTheme } from '../../theme/theme.js';
+import { useStyles } from './signin.styles';
 
 import { setCurrentUser } from '../../redux/user/user.actions';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
 
 function Copyright() {
   return (
@@ -36,11 +38,47 @@ function Copyright() {
 function SignIn({ setCurrentUser, history }) {
   const classes = useStyles();
 
-  console.log('history: ', history);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleSubmit = event => {
     event.preventDefault();
-    setCurrentUser('Bob');
-    history.push('/watchlist');
+
+    const signin = async () => {
+      const signinResponse = await fetch('http://localhost:3000/signin', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+      const user = await signinResponse.json();
+      console.log('signinresponse: ', signinResponse);
+      console.log('user: ', user);
+      if (signinResponse.status === 200) {
+        setCurrentUser({ ...user });
+        history.push('/watchlist');
+      } else {
+        console.log('error: ', user);
+      }
+    };
+
+    // signin();
+    const user = {
+      email: 'kevinmak05@gmail.com',
+    };
+    setCurrentUser({ ...user });
+  };
+
+  const handleUserChange = e => {
+    const { value } = e.target;
+    setEmail(value);
+  };
+
+  const handlePasswordChange = e => {
+    const { value } = e.target;
+    setPassword(value);
   };
 
   return (
@@ -53,7 +91,7 @@ function SignIn({ setCurrentUser, history }) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <ThemeProvider theme={textFieldTheme}>
             <TextField
               variant="outlined"
@@ -65,6 +103,7 @@ function SignIn({ setCurrentUser, history }) {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleUserChange}
             />
             <TextField
               variant="outlined"
@@ -76,6 +115,7 @@ function SignIn({ setCurrentUser, history }) {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handlePasswordChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
