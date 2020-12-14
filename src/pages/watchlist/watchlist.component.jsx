@@ -29,6 +29,7 @@ const Watchlist = ({ location, history, currentUser }) => {
 
   const [screen, setScreen] = useState(SCREEN.INDEX);
   const [watchList, setWatchList] = useState({});
+  const [DCFList, setDCFList] = useState({});
 
   console.log('currentUser: ', currentUser);
   console.log('watchList: ', watchList);
@@ -52,15 +53,29 @@ const Watchlist = ({ location, history, currentUser }) => {
 
       let rec = null;
       let watchlist = {};
+      let DCFList = {};
       for (const securityCode of data) {
         rec = await fetch(
           `http://localhost:3000/securityDetails/${securityCode}`
         );
         watchlist[securityCode] = await rec.json();
+        rec = await fetch(`http://localhost:3000/getDCF/${securityCode}`);
+        DCFList[securityCode] = await rec.json();
       }
-      return watchlist;
+      return {
+        PEList: watchlist,
+        DCFList,
+      };
     };
-    fetchWatchList().then(response => setWatchList(response));
+    fetchWatchList().then(response => {
+      console.log('response: ', response);
+      setWatchList(response.PEList);
+      setDCFList(response.DCFList);
+    });
+    // .then(response => {
+    //   console.log('response.DCFList: ', response.DCFList);
+    //   setDCFList(response.DCFList);
+    // });
   }, [currentUser]);
 
   const handleChange = (event, newValue) => {
@@ -74,6 +89,11 @@ const Watchlist = ({ location, history, currentUser }) => {
     'watchlist: ',
     Object.keys(watchList).map((key, index) => watchList[key].price.value)
   );
+  // console.log(
+  //   'DCFList: ',
+  //   Object.keys(DCFList).map((key, index) => DCFList[key].price.value)
+  // );
+  console.log('DCFList: ', DCFList);
 
   return (
     <div>
@@ -106,7 +126,8 @@ const Watchlist = ({ location, history, currentUser }) => {
                     <TableRow>
                       <TableCell>Security Code</TableCell>
                       <TableCell align="right">Price</TableCell>
-                      <TableCell align="right">Value</TableCell>
+                      <TableCell align="right">PE Value</TableCell>
+                      <TableCell align="right">DCF Value</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -121,6 +142,13 @@ const Watchlist = ({ location, history, currentUser }) => {
                         <TableCell align="right">
                           {watchList[key].peCalc.presentValue.toFixed(2)}
                         </TableCell>
+                        {DCFList[key] &&
+                          DCFList[key].dcfCalc &&
+                          DCFList[key].dcfCalc.DcfValue && (
+                            <TableCell align="right">
+                              {DCFList[key].dcfCalc.DcfValue.toFixed(2)}
+                            </TableCell>
+                          )}
                       </TableRow>
                     ))}
                   </TableBody>
